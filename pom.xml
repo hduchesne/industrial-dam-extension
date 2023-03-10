@@ -19,7 +19,7 @@
         <url>https://github.com/hduchesne/industrial-dam-extension</url>
     </scm>
     <properties>
-        <jahia-depends>animate,bootstrap4-components,bootstrap4-core,default,font-awesome,jquery,popperjs,widen-picker,cloudinary-picker</jahia-depends>
+        <jahia-depends>default,industrial,widen-picker,cloudinary-picker</jahia-depends>
     </properties>
     <repositories>
         <repository>

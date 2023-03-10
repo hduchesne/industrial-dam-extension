@@ -1,2 +1,82 @@
 <jnt = 'http://www.jahia.org/jahia/nt/1.0'>
 <jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<mix = 'http://www.jcp.org/jcr/mix/1.0'>
+<bootstrap4mix = 'http://www.jahia.org/bootstrap4/mix/1.0'>
+<wdenmix = 'http://modules.se.jahia.org/wden/mix/1.0'>
+<cloudymix = 'http://modules.se.jahia.org/cloudinary/mix/1.0'>
+<timix = 'http://www.jahia.org/template/b4/industrial/mix/1.0'>
+<tint = 'http://www.jahia.org/template/b4/industrial/nt/1.0'>
+<ti = 'http://www.jahia.org/template/b4/industrial/1.0'>
+
+//*** Single Picker //
+[timix:mediaPickerCdy] > jmix:dynamicFieldset mixin
+ extends = timix:mediaReference
+ - ti:mediaNode (weakreference) internationalized < cloudymix:cloudyAsset
+
+[timix:mediaPickerWd] > jmix:dynamicFieldset mixin
+ extends = timix:mediaReference
+ - ti:mediaNode (weakreference) internationalized < wdenmix:widenAsset
+
+[timix:mediaPickerJc] > jmix:dynamicFieldset mixin
+ extends = timix:mediaReference
+ - ti:mediaNode (weakreference,picker[type='image']) internationalized < jnt:file
+
+[timix:mediaReference] mixin
+ - ti:mediaPicker (string, choicelist) indexed=no
+
+//*** Multi Picker //
+[timix:igVdPickerCdy] > jmix:dynamicFieldset mixin
+ extends = timix:igVdReference
+- ti:imageNode (weakreference) internationalized < cloudymix:cloudyAsset
+- ti:videoNode (weakreference) internationalized < cloudymix:cloudyAsset
+
+[timix:igVdPickerWd] > jmix:dynamicFieldset mixin
+ extends = timix:igVdReference
+- ti:imageNode (weakreference) internationalized < wdenmix:widenAsset
+- ti:videoNode (weakreference) internationalized < wdenmix:widenAsset
+
+[timix:igVdPickerJc] > jmix:dynamicFieldset mixin
+ extends = timix:igVdReference
+ - ti:imageNode (weakreference,picker[type='image']) internationalized < jmix:image
+ - ti:videoNode (weakreference,picker[type='file']) internationalized < jnt:file
+
+[timix:igVdReference] mixin
+ - ti:mediaPicker (string, choicelist) indexed=no
+
+
+//*** GALLERY IMAGE //
+[tint:galleryDamImage] > jnt:content, timix:industrial, timix:mediaReference, timix:linkTo, mix:title
+ - heading (string) internationalized
+ - iconClass (string)
+
+//*** CAROUSEL //
+[tint:owlcarouselItemSW] > jnt:content, timix:igVdReference, mix:title
+ - caption (string, richtext[ckeditor.toolbar='Tinny',ckeditor.customConfig='$context/modules/industrial/javascript/ckeditor/config/default.js']) internationalized
+
+[tint:owlcarouselItemTW] > jnt:content, timix:mediaReference, mix:title
+ - heading (string, richtext[ckeditor.toolbar='Tinny',ckeditor.customConfig='$context/modules/industrial/javascript/ckeditor/config/small.js']) internationalized
+ - testimonial (string, richtext[ckeditor.toolbar='Tinny',ckeditor.customConfig='$context/modules/industrial/javascript/ckeditor/config/default.js']) internationalized
+
+[timix:owlCarouselSW] > jmix:dynamicFieldset mixin
+ extends = tint:owlcarousel
+ + * (tint:owlcarouselItemSW)
+
+[timix:owlCarouselTW] > jmix:dynamicFieldset mixin
+ extends = tint:owlcarousel
+ + * (tint:owlcarouselItemTW)
+
+//*** CONTENT //
+[tint:damImage] > jnt:content, timix:mediaReference
+
+[timix:damContent] > timix:mediaReference mixin
+ - body (string, richtext[ckeditor.toolbar='Tinny',ckeditor.customConfig='$context/modules/industrial/javascript/ckeditor/config/small.js']) internationalized
+
+[tint:damHeading] > jnt:content, timix:damContent, timix:industrial
+[tint:damCard] > jnt:content, timix:damContent, timix:industrial, timix:linkTo
+
+[tint:damHalfBlock] > jnt:content, timix:industrial
+ - imagePosition (string, choicelist[resourceBundle]) = 'left' autocreated indexed=no < 'left', 'right'
+ + image (tint:damImage)
+ + body (tint:text)
+
+

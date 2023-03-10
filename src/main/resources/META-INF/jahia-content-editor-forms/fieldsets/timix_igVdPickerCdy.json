@@ -1,0 +1,13 @@
+{
+  "name": "timix:igVdPickerCdy",
+  "fields": [
+    {
+      "name": "ti:imageNode",
+      "selectorType": "CloudinaryPicker"
+    },
+    {
+      "name": "ti:videoNode",
+      "selectorType": "CloudinaryPicker"
+    }
+  ]
+}
