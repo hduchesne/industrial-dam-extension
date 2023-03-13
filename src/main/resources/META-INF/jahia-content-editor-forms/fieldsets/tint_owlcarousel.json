@@ -1,5 +1,6 @@
 {
   "name": "tint:owlcarousel",
+  "priority": 1.1,
   "displayName": "Owl Carousel",
   "description": "",
   "dynamic": false,
