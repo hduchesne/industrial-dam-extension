@@ -13,29 +13,20 @@
 
 <c:choose>
     <c:when test="${!empty imageNode && jcr:isNodeType(imageNode, 'cloudymix:cloudyAsset')}">
-        <template:module node="${imageNode}" view="hidden.getSrc">
+        <template:module node="${imageNode}" view="hidden.getURL" var="imageURL" editable="false" templateType="txt">
             <template:param name="width" value="${defaultWidth}"/>
         </template:module>
-        <c:url var="imageURL" value="${moduleMap.src}"/>
     </c:when>
     <c:when test="${!empty imageNode && jcr:isNodeType(imageNode, 'wdenmix:widenAsset')}">
-        <template:module node="${imageNode}" view="hidden.getSrc">
+        <template:module node="${imageNode}" view="hidden.getURL" var="imageURL" editable="false" templateType="txt">
             <template:param name="scale" value="1"/>
             <template:param name="quality" value="72"/>
-            <template:param name="defaultWidth" value="${defaultWidth}"/>
+            <template:param name="size" value="${defaultWidth}"/>
         </template:module>
-        <c:url var="imageURL" value="${moduleMap.src}"/>
-
-<%--        <c:set var="imageURL" value="${imageNode.properties['wden:templatedUrl'].string}"/>--%>
-<%--        <c:set var="imageURL" value="${fn:replace(imageURL, '{scale}', '1')}"/>--%>
-<%--        <c:set var="imageURL" value="${fn:replace(imageURL, '{quality}', '72')}"/>--%>
-<%--        <c:set var="imageURL" value="${fn:replace(imageURL, '{size}', defaultWidth)}"/>--%>
-<%--        <c:url var="imageURL" value="${imageURL}"/>--%>
     </c:when>
     <c:otherwise>
         <c:url var="imageURL" value="${imageNode.url}"/>
     </c:otherwise>
 </c:choose>
 
-<%--<img src="${imageURL}" alt="${alt}"/>--%>
 <div class="image-display" style="background-image: url('${imageURL}');"></div>

@@ -25,8 +25,12 @@
 <c:if test="${!empty mediaNode && jcr:isNodeType(mediaNode, 'wdenmix:widenAsset')}">
     <c:set var="view" value="default"/>
 </c:if>
+<c:if test="${!empty mediaNode && jcr:isNodeType(mediaNode, 'cloudymix:cloudyAsset')}">
+    <c:set var="view" value="default"/>
+</c:if>
 
 <template:module node="${mediaNode}" editable="false" view="${view}">
+    <template:param name="width" value="${currentResource.moduleParams.width}"/>
     <template:param name="widths" value="${currentResource.moduleParams.widths}"/>
     <template:param name="defaultWidth" value="${currentResource.moduleParams.defaultWidth}"/>
     <template:param name="sizes" value="${currentResource.moduleParams.sizes}"/>

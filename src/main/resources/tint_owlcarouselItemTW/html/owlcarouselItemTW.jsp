@@ -20,17 +20,16 @@
 
 <c:choose>
     <c:when test="${!empty imageNode && jcr:isNodeType(imageNode, 'cloudymix:cloudyAsset')}">
-        <template:module node="${imageNode}" view="hidden.getSrc">
+        <template:module node="${imageNode}" view="hidden.getURL" var="imageURL" editable="false" templateType="txt">
             <template:param name="width" value="256"/>
         </template:module>
-        <c:url var="avatarURL" value="${moduleMap.src}"/>
     </c:when>
     <c:when test="${!empty imageNode && jcr:isNodeType(imageNode, 'wdenmix:widenAsset')}">
-        <c:set var="avatarURL" value="${imageNode.properties['wden:templatedUrl'].string}"/>
-        <c:set var="avatarURL" value="${fn:replace(avatarURL, '{scale}', '1')}"/>
-        <c:set var="avatarURL" value="${fn:replace(avatarURL, '{quality}', '72')}"/>
-        <c:set var="avatarURL" value="${fn:replace(avatarURL, '{size}', '256')}"/>
-        <c:url var="avatarURL" value="${avatarURL}"/>
+        <template:module node="${imageNode}" view="hidden.getURL" var="imageURL" editable="false" templateType="txt">
+            <template:param name="scale" value="1"/>
+            <template:param name="quality" value="72"/>
+            <template:param name="size" value="256"/>
+        </template:module>
     </c:when>
     <c:otherwise>
         <c:url var="avatarURL" value="${imageNode.url}"/>

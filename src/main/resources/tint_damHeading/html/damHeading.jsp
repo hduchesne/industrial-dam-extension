@@ -3,11 +3,7 @@
 <%@ taglib prefix="jcr" uri="http://www.jahia.org/tags/jcr" %>
 <%@ taglib prefix="utility" uri="http://www.jahia.org/tags/utilityLib" %>
 <%@ taglib prefix="template" uri="http://www.jahia.org/tags/templateLib" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 
-<%--<template:addResources type="css" resources="bootstrap.min.css" />--%>
-<%--<template:addResources type="javascript" resources="jquery.min.js,popper.min.js,bootstrap.min.js"/>--%>
 
 <c:set var="body" value="${currentNode.properties.body.string}"/>
 <c:set var="imageNode" value="${currentNode.properties['ti:mediaNode'].node}"/>
@@ -15,23 +11,16 @@
 
 <c:choose>
     <c:when test="${!empty imageNode && jcr:isNodeType(imageNode, 'cloudymix:cloudyAsset')}">
-        <template:module node="${imageNode}" view="hidden.getSrc">
+        <template:module node="${imageNode}" view="hidden.getURL" var="imageURL" editable="false" templateType="txt">
             <template:param name="width" value="1280"/>
         </template:module>
-        <c:url var="imageURL" value="${moduleMap.src}"/>
     </c:when>
     <c:when test="${!empty imageNode && jcr: isNodeType(imageNode, 'wdenmix:widenAsset')}">
-        <template:module node="${imageNode}" view="hidden.getSrc">
+        <template:module node="${imageNode}" view="hidden.getURL" var="imageURL" editable="false" templateType="txt">
             <template:param name="scale" value="1"/>
             <template:param name="quality" value="72"/>
-            <template:param name="defaultWidth" value="1280"/>
+            <template:param name="size" value="1280"/>
         </template:module>
-        <c:url var="imageURL" value="${moduleMap.src}"/>
-<%--        <c:set var="imageURL" value="${imageNode.properties['wden:templatedUrl'].string}"/>--%>
-<%--        <c:set var="imageURL" value="${fn:replace(imageURL, '{scale}', '1')}"/>--%>
-<%--        <c:set var="imageURL" value="${fn:replace(imageURL, '{quality}', '72')}"/>--%>
-<%--        <c:set var="imageURL" value="${fn:replace(imageURL, '{size}', '1280')}"/>--%>
-<%--        <c:url var="imageURL" value="${imageURL}"/>--%>
     </c:when>
     <c:otherwise>
         <c:url var="imageURL" value="${imageNode.url}"/>

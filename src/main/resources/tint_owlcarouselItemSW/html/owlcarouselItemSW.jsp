@@ -20,26 +20,22 @@
 
 <%--<c:set var="title" value="${currentNode.properties['jcr:title'].string}"/>--%>
 <c:set var="caption" value="${currentNode.properties.caption.string}"/>
-<%--<c:set var="imageNode" value="${currentNode.properties.image.node}"/>--%>
 
 <c:set var="imageNode" value="${currentNode.properties['ti:imageNode'].node}"/>
 <c:set var="videoNode" value="${currentNode.properties['ti:videoNode'].node}"/>
 
-
 <c:choose>
     <c:when test="${!empty imageNode && jcr:isNodeType(imageNode, 'cloudymix:cloudyAsset')}">
-        <template:module node="${imageNode}" view="hidden.getSrc">
+        <template:module node="${imageNode}" view="hidden.getURL" var="imageURL" editable="false" templateType="txt">
             <template:param name="width" value="2000"/>
         </template:module>
-        <c:url var="imageURL" value="${moduleMap.src}"/>
     </c:when>
     <c:when test="${!empty imageNode && jcr:isNodeType(imageNode, 'wdenmix:widenAsset')}">
-        <utility:logger level="DEBUG" value="**** jcr:isNodeType(imageNode, 'wdenmix:widenAsset') : ${jcr:isNodeType(imageNode, 'wdenmix:widenAsset')}"/>
-        <c:set var="imageURL" value="${imageNode.properties['wden:templatedUrl'].string}"/>
-        <c:set var="imageURL" value="${fn:replace(imageURL, '{scale}', '1')}"/>
-        <c:set var="imageURL" value="${fn:replace(imageURL, '{quality}', '72')}"/>
-        <c:set var="imageURL" value="${fn:replace(imageURL, '{size}', '2000')}"/>
-        <c:url var="imageURL" value="${imageURL}"/>
+        <template:module node="${imageNode}" view="hidden.getURL" var="imageURL" editable="false" templateType="txt">
+            <template:param name="scale" value="1"/>
+            <template:param name="quality" value="72"/>
+            <template:param name="size" value="2000"/>
+        </template:module>
     </c:when>
     <c:otherwise>
         <c:url var="imageURL" value="${imageNode.url}"/>
@@ -47,6 +43,9 @@
 </c:choose>
 
 <c:choose>
+    <c:when test="${!empty videoNode && jcr:isNodeType(videoNode, 'cloudymix:cloudyAsset')}">
+        <c:url var="videoURL" value="${videoNode.properties['cloudy:url'].string}"/>
+    </c:when>
     <c:when test="${!empty videoNode && jcr:isNodeType(videoNode, 'wdenmix:widenAsset')}">
         <c:url var="videoURL" value="${videoNode.properties['wden:videoStreamURL'].string}"/>
     </c:when>
