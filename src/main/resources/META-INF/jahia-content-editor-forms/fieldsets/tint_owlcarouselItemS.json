@@ -1,0 +1,13 @@
+{
+  "name": "tint:owlcarouselItemS",
+  "fields": [
+    {
+      "name": "image",
+      "selectorType": "DamSelector",
+      "selectorOptionsMap": {
+        "choiceListLabels": ["Jahia","Widen","Cloudinary"],
+        "choiceListPicker": ["image","WidenPicker","CloudinaryPicker"]
+      }
+    }
+  ]
+}
