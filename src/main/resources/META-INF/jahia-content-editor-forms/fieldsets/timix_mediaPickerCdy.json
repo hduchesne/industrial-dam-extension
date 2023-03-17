@@ -1,9 +1,0 @@
-{
-  "name": "timix:mediaPickerCdy",
-  "fields": [
-    {
-      "name": "ti:mediaNode",
-      "selectorType": "CloudinaryPicker"
-    }
-  ]
-}

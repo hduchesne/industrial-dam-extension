@@ -19,7 +19,7 @@
         <url>https://github.com/hduchesne/industrial-dam-extension</url>
     </scm>
     <properties>
-        <jahia-depends>default,industrial,widen-picker,cloudinary-picker</jahia-depends>
+        <jahia-depends>default,industrial,widen-picker,cloudinary-picker,dam-selector</jahia-depends>
     </properties>
     <repositories>
         <repository>
@@ -45,6 +45,7 @@
                 <configuration>
                     <instructions>
                         <Jahia-Static-Resources>/javascript,/icons</Jahia-Static-Resources>
+                        <Jahia-Module-Priority>100</Jahia-Module-Priority>
                     </instructions>
                 </configuration>
             </plugin>

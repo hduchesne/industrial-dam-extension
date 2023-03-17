@@ -1,13 +1,13 @@
 {
-  "name": "tint:owlcarouselItemS",
+  "name": "timix:weakVideoContent",
   "fields": [
     {
-      "name": "image",
+      "name": "ti:video",
       "selectorType": "DamSelector",
       "selectorOptionsMap": {
         "choiceListLabels": ["Jahia","Widen","Cloudinary"],
         "choiceListPickers": ["Picker","WidenPicker","CloudinaryPicker"],
-        "choiceListNodeTypes": ["jmix:image","wdennt:image","cloudynt:image"]
+        "choiceListNodeTypes": ["jnt:file","wdennt:video","cloudynt:video"]
       }
     }
   ]

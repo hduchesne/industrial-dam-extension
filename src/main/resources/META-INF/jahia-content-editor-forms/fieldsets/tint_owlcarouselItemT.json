@@ -1,8 +1,8 @@
 {
-  "name": "tint:owlcarouselItemS",
+  "name": "tint:owlcarouselItemT",
   "fields": [
     {
-      "name": "image",
+      "name": "avatar",
       "selectorType": "DamSelector",
       "selectorOptionsMap": {
         "choiceListLabels": ["Jahia","Widen","Cloudinary"],
