@@ -1,30 +1,13 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="template" uri="http://www.jahia.org/tags/templateLib" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="jcr" uri="http://www.jahia.org/tags/jcr" %>
-<%@ taglib prefix="ui" uri="http://www.jahia.org/tags/uiComponentsLib" %>
-<%@ taglib prefix="functions" uri="http://www.jahia.org/tags/functions" %>
-<%@ taglib prefix="query" uri="http://www.jahia.org/tags/queryLib" %>
 <%@ taglib prefix="utility" uri="http://www.jahia.org/tags/utilityLib" %>
-<%@ taglib prefix="s" uri="http://www.jahia.org/tags/search" %>
-<%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
-<%--@elvariable id="out" type="java.io.PrintWriter"--%>
-<%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
-<%--@elvariable id="scriptInfo" type="java.lang.String"--%>
-<%--@elvariable id="workspace" type="java.lang.String"--%>
-<%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
-<%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
-<%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 
-<utility:logger level="INFO" value=" ***** owcarouseItemS Industrial-Dam-Extension :  WIN"/>
+<utility:logger level="DEBUG" value=" ***** owcarouseItemS Industrial-Dam-Extension :  WIN"/>
 
-<%--<c:set var="title" value="${currentNode.properties['jcr:title'].string}"/>--%>
 <c:set var="caption" value="${currentNode.properties.caption.string}"/>
-
 <c:set var="imageNode" value="${currentNode.properties['image'].node}"/>
-<%--<c:set var="videoNode" value="${currentNode.properties['ti:videoNode'].node}"/>--%>
 
 <c:choose>
     <c:when test="${!empty imageNode && jcr:isNodeType(imageNode, 'cloudymix:cloudyAsset')}">
@@ -44,20 +27,27 @@
     </c:otherwise>
 </c:choose>
 
-<%--<c:choose>--%>
-<%--    <c:when test="${!empty videoNode && jcr:isNodeType(videoNode, 'cloudymix:cloudyAsset')}">--%>
-<%--        <c:url var="videoURL" value="${videoNode.properties['cloudy:url'].string}"/>--%>
-<%--    </c:when>--%>
-<%--    <c:when test="${!empty videoNode && jcr:isNodeType(videoNode, 'wdenmix:widenAsset')}">--%>
-<%--        <c:url var="videoURL" value="${videoNode.properties['wden:videoStreamURL'].string}"/>--%>
-<%--    </c:when>--%>
-<%--    <c:otherwise>--%>
-<%--        <c:url var="videoURL" value="${videoNode.url}"/>--%>
-<%--    </c:otherwise>--%>
-<%--</c:choose>--%>
 
-<%--<c:url var="videoURL" value="${currentNode.properties.videoURL.string}"/>--%>
-<%--<c:url var="imageURL" value="${currentNode.properties.image.node.url}"/>--%>
+<c:set var="mediaSource" value="${currentNode.properties['ti:mediaSource'].string}" />
+<c:choose>
+    <c:when test="${mediaSource eq 'reference'}">
+        <c:set var="videoNode" value="${currentNode.properties['ti:video'].node}"/>
+        <c:choose>
+            <c:when test="${!empty videoNode && jcr:isNodeType(videoNode, 'cloudymix:cloudyAsset')}">
+                <template:module node="${videoNode}" view="hidden.getURL" var="videoURL" editable="false" templateType="txt"/>
+            </c:when>
+            <c:when test="${!empty videoNode && jcr:isNodeType(videoNode, 'wdenmix:widenAsset')}">
+                <template:module node="${videoNode}" view="hidden.getURL" var="videoURL" editable="false" templateType="txt"/>
+            </c:when>
+            <c:otherwise>
+                <c:url var="videoURL" value="${currentNode.properties['ti:video'].node.url}"/>
+            </c:otherwise>
+        </c:choose>
+    </c:when>
+    <c:when test="${mediaSource eq 'url'}">
+        <c:url var="videoURL" value="${currentNode.properties['ti:video'].string}"/>
+    </c:when>
+</c:choose>
 
 <c:choose>
     <c:when test="${renderContext.editMode}">
